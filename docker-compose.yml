@@ -21,6 +21,13 @@ services:
       dockerfile: Dockerfile
     image: airobots_docker:ros_foxy
     container_name: ros_foxy
+  
+  PyTorch:
+    build:
+      context: ./PyTorch
+      dockerfile: Dockerfile
+    image: airobots_docker:PyTorch
+    container_name: PyTorch
 
   # Application
   ros_slam:
