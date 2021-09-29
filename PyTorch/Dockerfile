@@ -70,14 +70,18 @@ RUN python3 -m pip install torch==1.9.1+cu111 \
     torchvision==0.10.1+cu111 \
     torchaudio==0.9.1 -f https://download.pytorch.org/whl/torch_stable.html
 
+#Install tini
+ENV TINI_VERSION v0.18.0
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
+RUN chmod +x /usr/bin/tini
+
 # enable read write
 RUN usermod -a -G dialout ${USERNAME}
 
 # ROS entry point
-COPY ./ros_entrypoint.sh /
-RUN chmod +x /ros_entrypoint.sh
-ENTRYPOINT ["/usr/bin/tini", "--", "/ros_entrypoint.sh"]
-
-CMD [ "sleep", "infinity" ]
+# COPY ./entrypoint.sh /
+# RUN chmod +x /entrypoint.sh
+# ENTRYPOINT ["/usr/bin/tini", "--", "/entrypoint.sh"]
+# CMD [ "sleep", "infinity" ]
 
 WORKDIR /home/${USERNAME}

@@ -71,3 +71,24 @@ services:
       - "DISPLAY=$DISPLAY"
       - "QT_X11_NO_MITSHM=1"
       - "XAUTHORITY=/tmp/.docker.xauth" 
+
+  PyTorch_env:
+    build:
+      context: ./PyTorch_env
+      dockerfile: Dockerfile
+    depends_on: [PyTorch]
+    image: airobots_docker:PyTorch_env
+    container_name: PyTorch_env
+    runtime: nvidia
+    user: aiRobots
+    privileged: true
+    volumes:
+      - ~/aiRobots/PyTorch_env:/home/aiRobots/
+      - ~/aiRobots/Datasets:/home/aiRobots/Datasets
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /tmp/.docker.xauth:/tmp/.docker.xauth:rw
+      - /dev:/dev
+    environment:
+      - "DISPLAY=$DISPLAY"
+      - "QT_X11_NO_MITSHM=1"
+      - "XAUTHORITY=/tmp/.docker.xauth"
