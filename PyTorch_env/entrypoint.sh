@@ -1,9 +1,10 @@
 #!/bin/bash
 set -e
-if [ !-f "/home/aiRobots/.bashrc" ] 
+if [ ! -f "/home/aiRobots/.vimrc" ] 
 then
-    echo "/home/phpini/testfile is a file"
-    cp /etc/skel/.bashrc ~/
+    # cp /etc/skel/.bashrc ~/
+    cp -f /.bashrc ~/
+    cp -f /.vimrc ~/
+    cp -rf /.vim/ ~/
 fi
-vim +PluginInstall +qall
 exec "$@"

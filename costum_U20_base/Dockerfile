@@ -1,4 +1,4 @@
-# Use ROS melodic as base iamge
+# Use nvidia/cudagl with Ubuntu 20.04 as base iamge
 FROM nvidia/cudagl:11.1.1-devel-ubuntu20.04
 
 ENV NV_CUDNN_VERSION 8.0.5.39
@@ -47,13 +47,6 @@ RUN groupadd --gid ${USER_GID} ${USERNAME} \
 
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F42ED6FBAB17C654
 
-#Install cudnn
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    ${NV_CUDNN_PACKAGE} \
-    ${NV_CUDNN_PACKAGE_DEV} \
-    && apt-mark hold ${NV_CUDNN_PACKAGE_NAME} && \
-    rm -rf /var/lib/apt/lists/*
-
 # Install SDL2 for Joy
 RUN apt-get -y update && apt-get -y install --no-install-recommends \
     apt-utils 2>&1 \
@@ -65,11 +58,6 @@ RUN apt-get -y update && apt-get -y install --no-install-recommends \
     python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
-# Install PyTorch 1.9.1
-RUN python3 -m pip install torch==1.9.1+cu111 \
-    torchvision==0.10.1+cu111 \
-    torchaudio==0.9.1 -f https://download.pytorch.org/whl/torch_stable.html
-
 #Install tini
 ENV TINI_VERSION v0.18.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
@@ -77,6 +65,15 @@ RUN chmod +x /usr/bin/tini
 
 # enable read write
 RUN usermod -a -G dialout ${USERNAME}
+
+# Setup vim and bash
+WORKDIR /
+COPY ./.bashrc /
+COPY ./.vimrc /
+RUN \
+  git clone https://github.com/VundleVim/Vundle.vim.git /.vim/bundle/Vundle.vim && \
+  ln -sf /.vim /root/ && \
+  vim -E -s -u /.vimrc  +PluginInstall +qall
 
 # ROS entry point
 # COPY ./entrypoint.sh /

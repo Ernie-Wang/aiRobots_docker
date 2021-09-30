@@ -36,6 +36,17 @@ RUN python3 -m pip install --upgrade pip --no-cache-dir \
 # enable read write
 RUN usermod -a -G dialout ${USERNAME}
 
+
+# Setup vim and bash
+WORKDIR /
+COPY ./.bashrc /
+COPY ./.vimrc /
+RUN \
+  git clone https://github.com/VundleVim/Vundle.vim.git /.vim/bundle/Vundle.vim && \
+  ln -sf /.vim /root/ && \
+  vim -E -s -u /.vimrc  +PluginInstall +qall
+
+
 # ROS entry point
 COPY ./ros_entrypoint.sh /
 RUN chmod +x /ros_entrypoint.sh

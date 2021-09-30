@@ -22,12 +22,12 @@ services:
     image: airobots_docker:ros_foxy
     container_name: ros_foxy
   
-  PyTorch:
+  costum_U20_base:
     build:
-      context: ./PyTorch
+      context: ./costum_U20_base
       dockerfile: Dockerfile
-    image: airobots_docker:PyTorch
-    container_name: PyTorch
+    image: airobots_docker:costum_U20_base
+    container_name: costum_U20_base
 
   # Application
   ros_slam:
@@ -64,6 +64,7 @@ services:
     privileged: true
     volumes:
       - ~/aiRobots/Joy:/home/aiRobots
+      - ~/Desktop/Git:/home/aiRobots/Git
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - /tmp/.docker.xauth:/tmp/.docker.xauth:rw
       - /dev:/dev
@@ -76,7 +77,7 @@ services:
     build:
       context: ./PyTorch_env
       dockerfile: Dockerfile
-    depends_on: [PyTorch]
+    depends_on: [costum_U20_base]
     image: airobots_docker:PyTorch_env
     container_name: PyTorch_env
     runtime: nvidia
@@ -84,6 +85,7 @@ services:
     privileged: true
     volumes:
       - ~/aiRobots/PyTorch_env:/home/aiRobots/
+      - ~/Desktop/Git:/home/aiRobots/Git
       - ~/aiRobots/Datasets:/home/aiRobots/Datasets
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - /tmp/.docker.xauth:/tmp/.docker.xauth:rw

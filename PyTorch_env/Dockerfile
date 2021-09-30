@@ -1,17 +1,20 @@
 # Use PyTorch as base iamge
-FROM airobots_docker:PyTorch
+FROM airobots_docker:costum_U20_base
 
+#Install cudnn
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ${NV_CUDNN_PACKAGE} \
+    ${NV_CUDNN_PACKAGE_DEV} \
+    && apt-mark hold ${NV_CUDNN_PACKAGE_NAME} && \
+    rm -rf /var/lib/apt/lists/*
 
+# Install PyTorch 1.9.1
+RUN python3 -m pip install torch==1.9.1+cu111 \
+    torchvision==0.10.1+cu111 \
+    torchaudio==0.9.1 -f https://download.pytorch.org/whl/torch_stable.html
 
 # enable read write
 RUN usermod -a -G dialout ${USERNAME}
-
-# # Copy .bashrc
-# COPY ./.bashrc /
-# # Copy .vimrc
-# COPY ./.vimrc /
-# RUN git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-# RUN vim +PluginInstall +qall
 
 # entry point
 COPY ./entrypoint.sh /
