@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-if [ ! -f "~/.bashrc" ] 
+if [ ! -f "~/.vimrc" ] 
 then
     # cp /etc/skel/.bashrc ~/
     cp -f /.bashrc ~/

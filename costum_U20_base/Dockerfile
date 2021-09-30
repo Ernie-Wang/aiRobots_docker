@@ -51,6 +51,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F42ED6FBAB17C654
 RUN apt-get -y update && apt-get -y install --no-install-recommends \
     apt-utils 2>&1 \
     libsdl2-dev \
+    tmux \
     && rm -rf /var/lib/apt/lists/*
 
 # Install pip

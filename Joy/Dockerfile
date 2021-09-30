@@ -27,10 +27,12 @@ RUN apt-get -y update && apt-get -y install --no-install-recommends \
 # Install pip
 RUN apt-get -y update && apt-get -y install --no-install-recommends \
     python3-pip \
+    tmux \
     && rm -rf /var/lib/apt/lists/*
 
 # Install tensorflow 2.4.0
 RUN python3 -m pip install --upgrade pip --no-cache-dir \ 
+    jupyter \
     tensorflow==2.4.1
 
 # enable read write
@@ -46,6 +48,7 @@ RUN \
   ln -sf /.vim /root/ && \
   vim -E -s -u /.vimrc  +PluginInstall +qall
 
+EXPOSE 8888
 
 # ROS entry point
 COPY ./ros_entrypoint.sh /

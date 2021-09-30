@@ -8,6 +8,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-mark hold ${NV_CUDNN_PACKAGE_NAME} && \
     rm -rf /var/lib/apt/lists/*
 
+# Install Python pkg
+RUN python3 -m pip install jupyter
+
 # Install PyTorch 1.9.1
 RUN python3 -m pip install torch==1.9.1+cu111 \
     torchvision==0.10.1+cu111 \
