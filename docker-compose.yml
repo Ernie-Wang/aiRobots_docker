@@ -84,7 +84,7 @@ services:
     user: aiRobots
     privileged: true
     volumes:
-      - ~/aiRobots/PyTorch_env:/home/aiRobots/
+      - ~/aiRobots/PyTorch_env:/home/aiRobots/Share
       - ~/Desktop/Git:/home/aiRobots/Git
       - ~/aiRobots/Datasets:/home/aiRobots/Datasets
       - /tmp/.X11-unix:/tmp/.X11-unix:rw

@@ -68,14 +68,14 @@ RUN chmod +x /usr/bin/tini
 RUN usermod -a -G dialout ${USERNAME}
 
 # Setup vim and bash
-WORKDIR /
-COPY ./.bashrc /
-COPY ./.vimrc /
+USER ${USERNAME}
+COPY ./.bashrc /home/${USERNAME}/
+COPY ./.vimrc /home/${USERNAME}/
 RUN \
-  git clone https://github.com/VundleVim/Vundle.vim.git /.vim/bundle/Vundle.vim && \
-  ln -sf /.vim /root/ && \
-  vim -E -s -u /.vimrc  +PluginInstall +qall
+  git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim && \
+  vim -E -s -u ~/.vimrc  +PluginInstall +qall
 
+USER root
 # ROS entry point
 # COPY ./entrypoint.sh /
 # RUN chmod +x /entrypoint.sh
