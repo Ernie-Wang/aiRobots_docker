@@ -182,3 +182,5 @@ if ! shopt -oq posix; then
   fi
 fi
 
+#ROS
+source /opt/ros/${ROS_DISTRO}/setup.bash

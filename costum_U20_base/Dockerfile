@@ -71,6 +71,7 @@ RUN usermod -a -G dialout ${USERNAME}
 USER ${USERNAME}
 COPY ./.bashrc /home/${USERNAME}/
 COPY ./.vimrc /home/${USERNAME}/
+COPY ./.tmux.conf /home/${USERNAME}/
 RUN \
   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim && \
   vim -E -s -u ~/.vimrc  +PluginInstall +qall

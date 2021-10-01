@@ -40,14 +40,15 @@ RUN usermod -a -G dialout ${USERNAME}
 
 
 # Setup vim and bash
-WORKDIR /
-COPY ./.bashrc /
-COPY ./.vimrc /
+USER ${USERNAME}
+COPY ./.bashrc /home/${USERNAME}
+COPY ./.vimrc /home/${USERNAME}
+COPY ./.tmux.conf /home/${USERNAME}/
 RUN \
-  git clone https://github.com/VundleVim/Vundle.vim.git /.vim/bundle/Vundle.vim && \
-  ln -sf /.vim /root/ && \
-  vim -E -s -u /.vimrc  +PluginInstall +qall
+  git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim && \
+  vim -E -s -u ~/.vimrc  +PluginInstall +qall
 
+USER root
 EXPOSE 8888
 
 # ROS entry point

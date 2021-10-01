@@ -63,7 +63,7 @@ services:
     user: aiRobots
     privileged: true
     volumes:
-      - ~/aiRobots/Joy:/home/aiRobots
+      - ~/aiRobots/Joy:/home/aiRobots/Share
       - ~/Desktop/Git:/home/aiRobots/Git
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - /tmp/.docker.xauth:/tmp/.docker.xauth:rw

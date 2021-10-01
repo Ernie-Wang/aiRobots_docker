@@ -1,10 +1,7 @@
 #!/bin/bash
 set -e
-if [ ! -f "/home/aiRobots/.vimrc" ] 
+if [ ! -f "/home/aiRobots/.bashrc" ] 
 then
-    # cp /etc/skel/.bashrc ~/
-    cp -f /.bashrc ~/
-    cp -f /.vimrc ~/
-    cp -rf /.vim/ ~/
+    cp /etc/skel/.bashrc ~/
 fi
 exec "$@"
