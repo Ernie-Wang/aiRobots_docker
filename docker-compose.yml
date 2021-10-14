@@ -94,3 +94,25 @@ services:
       - "DISPLAY=$DISPLAY"
       - "QT_X11_NO_MITSHM=1"
       - "XAUTHORITY=/tmp/.docker.xauth"
+
+  data_gen:
+    build:
+      context: ./data_gen
+      dockerfile: Dockerfile
+    image: airobots_docker:data_gen
+    container_name: data_gen
+    user: aiRobots
+    privileged: true
+    ports:
+      - "8888:8888"
+    volumes:
+      - ~/aiRobots/data_gen:/home/aiRobots/Share
+      - ~/Desktop/Git:/home/aiRobots/Git
+      - ~/aiRobots/Datasets:/home/aiRobots/Datasets
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /tmp/.docker.xauth:/tmp/.docker.xauth:rw
+      - /dev:/dev
+    environment:
+      - "DISPLAY=$DISPLAY"
+      - "QT_X11_NO_MITSHM=1"
+      - "XAUTHORITY=/tmp/.docker.xauth"
