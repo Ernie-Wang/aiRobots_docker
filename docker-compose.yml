@@ -116,3 +116,10 @@ services:
       - "DISPLAY=$DISPLAY"
       - "QT_X11_NO_MITSHM=1"
       - "XAUTHORITY=/tmp/.docker.xauth"
+    # command:
+    #   - /bin/sh
+    #   - -c
+    #   - |
+    #     export DISPLAY=:99
+    #     Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+    #     node ./Git/aiRobots/basic_obj_gent/save_obj.js -m test

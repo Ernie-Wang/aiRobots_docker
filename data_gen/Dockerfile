@@ -29,6 +29,9 @@ RUN apt-get -y update && apt-get -y install --no-install-recommends \
     dirmngr \
     gpg-agent \
     dbus \
+    xserver-xorg-dev \
+    libxi-dev \
+    libxext-dev \
     && dbus-uuidgen >> /etc/machine-id \
     && rm -rf /var/lib/apt/lists/*
 
@@ -45,20 +48,20 @@ RUN apt-get -y update && apt-get -y install --no-install-recommends \
     python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
+# Install x11 server
+RUN apt-get -y update && apt-get -y install --no-install-recommends \
+    x-window-system \
+    mesa-utils \
+    xserver-xorg-dev \
+    libxi-dev \
+    libxext-dev  \
+    xvfb \
+    && rm -rf /var/lib/apt/lists/*
+
 #Install tini
 ENV TINI_VERSION v0.18.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
 RUN chmod +x /usr/bin/tini
-
-
-# RUN curl -sSL https://deb.nodesource.com/setup_16.x | sudo bash -
-
-# RUN apt-get update && apt-get install -y --no-install-recommends \
-#     npm && \
-#     rm -rf /var/lib/apt/lists/*
-
-# RUN npm install -g typescript
-
 
 # enable read write
 RUN usermod -a -G dialout ${USERNAME}
@@ -67,17 +70,17 @@ WORKDIR /home/${USERNAME}/
 # Install nodejs packages
 RUN npm install -g --save-dev \
     typescript \
-    @types/express \
     @types/node \
     nodemon \
     ts-node \
     three \
-    browserify \
     && npm install \
     three \
+    gl\
     mocha \
     multer \
-    express 
+    express \
+    vblob
 
 # Setup vim and bash
 USER ${USERNAME}
@@ -99,6 +102,7 @@ EXPOSE 5501
 COPY ./entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/usr/bin/tini", "--", "/entrypoint.sh"]
+# ENTRYPOINT ["/usr/bin/tini", "--", "xvfb-run", "-s", "-ac -screen 0 1280x1024x24"]
 
 CMD [ "sleep", "infinity" ]
 
