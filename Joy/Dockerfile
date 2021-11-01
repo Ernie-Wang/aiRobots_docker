@@ -10,6 +10,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-key F6E65AC044F831AC80A0
     librealsense2-dkms \
     librealsense2-utils \
     librealsense2-dev \
+    ros-noetic-rgbd-launch \
     && rm -rf /var/lib/apt/lists/*
 
 # Install realsense-ros
