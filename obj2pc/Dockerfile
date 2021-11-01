@@ -1,5 +1,5 @@
 # Use PyTorch as base image
-FROM node:16.11
+FROM nvidia/opengl:1.2-glvnd-devel-ubuntu20.04
 
 ARG USERNAME=aiRobots
 ARG PASSWORD=aiRobots
@@ -51,6 +51,10 @@ RUN apt-get -y update && apt-get -y install --no-install-recommends \
     python3-setuptools \
     && rm -rf /var/lib/apt/lists/*
 
+# Install Open3D python version
+RUN python3 -m pip install --upgrade pip --no-cache-dir \
+    open3d 
+
 # Install x11 server
 RUN apt-get -y update && apt-get -y install --no-install-recommends \
     x-window-system \
@@ -69,21 +73,6 @@ RUN chmod +x /usr/bin/tini
 # enable read write
 RUN usermod -a -G dialout ${USERNAME}
 
-WORKDIR /home/${USERNAME}/
-# Install nodejs packages
-RUN npm install -g --save-dev \
-    typescript \
-    @types/node \
-    nodemon \
-    ts-node \
-    three \
-    && npm install \
-    three \
-    gl\
-    mocha \
-    multer \
-    express \
-    vblob
 
 # Setup vim and bash
 USER ${USERNAME}
@@ -98,7 +87,7 @@ RUN \
 USER root
 
 # replace this with your application's default port
-EXPOSE 8787
+EXPOSE 8888
 
 # entry point
 COPY ./entrypoint.sh /

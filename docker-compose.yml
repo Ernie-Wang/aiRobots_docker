@@ -95,6 +95,30 @@ services:
       - "QT_X11_NO_MITSHM=1"
       - "XAUTHORITY=/tmp/.docker.xauth"
 
+  obj2pc:
+    build:
+      context: ./obj2pc
+      dockerfile: Dockerfile
+    image: airobots_docker:obj2pc
+    container_name: obj2pc
+    user: aiRobots
+    runtime: nvidia
+    privileged: true
+    ports:
+      - "8888:8888"
+      - "51454:51454"
+    volumes:
+      - ~/aiRobots/obj2pc:/home/aiRobots/Share
+      - ~/Desktop/Git:/home/aiRobots/Git
+      - ~/aiRobots/Datasets:/home/aiRobots/Datasets
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /tmp/.docker.xauth:/tmp/.docker.xauth:rw
+      - /dev:/dev
+    environment:
+      - "DISPLAY=$DISPLAY"
+      - "QT_X11_NO_MITSHM=1"
+      - "XAUTHORITY=/tmp/.docker.xauth"
+
   data_gen:
     build:
       context: ./data_gen
@@ -104,7 +128,7 @@ services:
     user: aiRobots
     privileged: true
     ports:
-      - "8888:8888"
+      - "8787:8787"
     volumes:
       - ~/aiRobots/data_gen:/home/aiRobots/Share
       - ~/Desktop/Git:/home/aiRobots/Git
