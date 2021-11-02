@@ -101,12 +101,11 @@ services:
       dockerfile: Dockerfile
     image: airobots_docker:obj2pc
     container_name: obj2pc
-    user: aiRobots
+    user: "${UID}:${GID}"
     runtime: nvidia
     privileged: true
     ports:
       - "8888:8888"
-      - "51454:51454"
     volumes:
       - ~/aiRobots/obj2pc:/home/aiRobots/Share
       - ~/Desktop/Git:/home/aiRobots/Git

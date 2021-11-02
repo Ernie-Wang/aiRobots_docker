@@ -1,10 +1,10 @@
-# Use PyTorch as base image
-FROM nvidia/opengl:1.2-glvnd-devel-ubuntu20.04
+# Use nvidia/cudagl as base image
+FROM nvidia/cudagl:11.0.3-devel-ubuntu20.04
 
 ARG USERNAME=aiRobots
 ARG PASSWORD=aiRobots
 # 1000 is being used in node
-ARG USER_UID=1002
+ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
 # setup environment
