@@ -101,7 +101,7 @@ services:
       dockerfile: Dockerfile
     image: airobots_docker:obj2pc
     container_name: obj2pc
-    user: "${UID}:${GID}"
+    user: aiRobots
     runtime: nvidia
     privileged: true
     ports:
@@ -109,7 +109,7 @@ services:
     volumes:
       - ~/aiRobots/obj2pc:/home/aiRobots/Share
       - ~/Desktop/Git:/home/aiRobots/Git
-      - ~/aiRobots/Datasets:/home/aiRobots/Datasets
+      - /home/Data:/home/aiRobots/Datasets
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - /tmp/.docker.xauth:/tmp/.docker.xauth:rw
       - /dev:/dev
@@ -131,7 +131,7 @@ services:
     volumes:
       - ~/aiRobots/data_gen:/home/aiRobots/Share
       - ~/Desktop/Git:/home/aiRobots/Git
-      - ~/aiRobots/Datasets:/home/aiRobots/Datasets
+      - /home/Data:/home/aiRobots/Datasets
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - /tmp/.docker.xauth:/tmp/.docker.xauth:rw
       - /dev:/dev
