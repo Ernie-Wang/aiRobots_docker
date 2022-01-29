@@ -4,7 +4,7 @@ FROM nvidia/cudagl:11.0.3-devel-ubuntu20.04
 ARG USERNAME=aiRobots
 ARG PASSWORD=aiRobots
 # 1000 is being used in node
-ARG USER_UID=1000
+ARG USER_UID=1002
 ARG USER_GID=$USER_UID
 
 # setup environment
@@ -53,10 +53,11 @@ RUN apt-get -y update && apt-get -y install --no-install-recommends \
 
 # Install Open3D python version
 RUN python3 -m pip install --upgrade pip --no-cache-dir \
-    open3d 
+    open3d
 
 # Install x11 server
 RUN apt-get -y update && apt-get -y install --no-install-recommends \
+    python3-tk \
     x-window-system \
     mesa-utils \
     xserver-xorg-dev \

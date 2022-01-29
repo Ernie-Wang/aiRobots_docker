@@ -4,7 +4,7 @@ FROM node:16.11
 ARG USERNAME=aiRobots
 ARG PASSWORD=aiRobots
 # 1000 is being used in node
-ARG USER_UID=1002
+ARG USER_UID=1001
 ARG USER_GID=$USER_UID
 
 # setup environment
