@@ -21,6 +21,13 @@ services:
       dockerfile: Dockerfile
     image: airobots_docker:ros_foxy
     container_name: ros_foxy
+
+  ros_galactic_base:
+    build: 
+      context: ./ros_galactic
+      dockerfile: Dockerfile
+    image: airobots_docker:ros_galactic
+    container_name: ros_galactic
   
   costum_U20_base:
     build:
@@ -146,3 +153,25 @@ services:
     #     export DISPLAY=:99
     #     Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
     #     node ./Git/aiRobots/basic_obj_gent/save_obj.js -m test
+
+  arm_sim:
+    build:
+      context: ./arm_sim
+      dockerfile: Dockerfile
+    depends_on: [ros_galactic_base]
+    image: airobots_docker:arm_sim
+    container_name: arm_sim
+    runtime: nvidia
+    user: aiRobots
+    privileged: true
+    volumes:
+      - ~/aiRobots/arm_sim:/home/aiRobots/Share
+      - ~/Desktop/Git:/home/aiRobots/Git
+      - ~/aiRobots/Datasets:/home/aiRobots/Datasets
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /tmp/.docker.xauth:/tmp/.docker.xauth:rw
+      - /dev:/dev
+    environment:
+      - "DISPLAY=$DISPLAY"
+      - "QT_X11_NO_MITSHM=1"
+      - "XAUTHORITY=/tmp/.docker.xauth"
